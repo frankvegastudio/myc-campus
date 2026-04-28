@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campus-to-Studio — MYC for Design Schools</title>
+  <meta name="description" content="A collaboration program bringing Makers Yield & Costs to fashion and design students at FIT, Pratt, FIDM, and Kent State." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #1A0F0A;
+      --bg-subtle:   #2E1A11;
+      --surface:     #3C2214;
+      --surface-hi:  #4A2817;
+      --text:        #FCE0C7;
+      --text-muted:  #F5C9A3;
+      --text-dim:    #C9956F;
+      --accent:      #F9B48C;
+      --accent-hi:   #E5967A;
+      --border:      rgba(249,180,140,0.15);
+      --border-hi:   rgba(249,180,140,0.30);
+      --grad-hero:   linear-gradient(180deg, #432518 0%, #2E1A11 55%, #1A0F0A 100%);
+      --grad-card:   linear-gradient(145deg, #4A2817 0%, #3C2214 100%);
+      --grad-cta:    linear-gradient(135deg, #E5967A 0%, #C47050 100%);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ─────────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(26,15,10,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--accent-hi);
+      color: #1A0F0A !important;
+      font-weight: 600 !important;
+      padding: 0.5rem 1.25rem;
+      border-radius: 6px;
+      transition: opacity 0.2s !important;
+    }
+    .nav-cta:hover { opacity: 0.88; }
+
+    /* ── HERO ────────────────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      background: var(--grad-hero);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 30%, rgba(249,180,140,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(249,180,140,0.12);
+      border: 1px solid var(--border-hi);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.375rem 1rem;
+      border-radius: 100px;
+      margin-bottom: 2rem;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      max-width: 900px;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+    .hero p {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: var(--text-muted);
+      max-width: 620px;
+      font-weight: 300;
+      margin-bottom: 3rem;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn-primary {
+      background: var(--grad-cta);
+      color: #1A0F0A;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      padding: 0.875rem 2rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-muted);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9375rem;
+      font-weight: 400;
+      padding: 0.875rem 2rem;
+      border: 1px solid var(--border-hi);
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--text); }
+
+    .hero-schools {
+      margin-top: 4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .hero-schools p {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      margin-bottom: 0;
+    }
+    .school-tags {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .school-tag {
+      background: rgba(249,180,140,0.06);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      padding: 0.375rem 1rem;
+      border-radius: 100px;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── SECTION WRAPPER ─────────────────────────────────────────── */
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .section-sub {
+      font-size: 1.0625rem;
+      color: var(--text-muted);
+      font-weight: 300;
+      max-width: 580px;
+      line-height: 1.7;
+    }
+
+    /* ── WHAT IS IT ──────────────────────────────────────────────── */
+    .what-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      margin-top: 4rem;
+    }
+    .what-text p {
+      color: var(--text-muted);
+      font-weight: 300;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .what-text p strong { color: var(--text); font-weight: 500; }
+    .kpi-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .kpi-card {
+      background: var(--grad-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .kpi-card:first-child { grid-column: 1 / -1; }
+    .kpi-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .kpi-label {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+    .kpi-note {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-top: 0.5rem;
+    }
+
+    /* ── HOW IT WORKS ────────────────────────────────────────────── */
+    .how-section { background: var(--bg-subtle); }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+    .step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem 1.5rem;
+      position: relative;
+    }
+    .step-number {
+      width: 36px; height: 36px;
+      background: rgba(249,180,140,0.12);
+      border: 1px solid var(--border-hi);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+    }
+    .step h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .step p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      font-weight: 300;
+      line-height: 1.65;
+    }
+    .step-connector {
+      display: none;
+    }
+
+    /* ── FOR WHOM ────────────────────────────────────────────────── */
+    .audience-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 3.5rem;
+    }
+    .audience-card {
+      background: var(--grad-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem;
+    }
+    .audience-card.featured {
+      border-color: var(--border-hi);
+    }
+    .audience-tag {
+      display: inline-block;
+      background: rgba(249,180,140,0.10);
+      border: 1px solid var(--border-hi);
+      color: var(--accent);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.75rem;
+      border-radius: 100px;
+      margin-bottom: 1.25rem;
+    }
+    .audience-card h3 {
+      font-size: 1.375rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+    .audience-card > p {
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+      font-weight: 300;
+      line-height: 1.7;
+      margin-bottom: 1.75rem;
+    }
+    .audience-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+    }
+    .audience-list li {
+      display: flex;
+      gap: 0.625rem;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+    .audience-list li::before {
+      content: '';
+      width: 16px; height: 16px;
+      min-width: 16px;
+      background: var(--accent);
+      border-radius: 50%;
+      margin-top: 3px;
+      opacity: 0.7;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8l3.5 3.5L13 4.5' stroke='%231A0F0A' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-size: cover;
+    }
+
+    /* ── RESEARCH CONTEXT ────────────────────────────────────────── */
+    .research-section { background: var(--bg-subtle); }
+    .research-inner {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3rem;
+      margin-top: 3.5rem;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .research-text p {
+      color: var(--text-muted);
+      font-weight: 300;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+      font-size: 0.9375rem;
+    }
+    .research-text p strong { color: var(--text); font-weight: 500; }
+    .research-text cite {
+      font-size: 0.8125rem;
+      color: var(--text-dim);
+      font-style: normal;
+      display: block;
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    .research-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .r-stat {
+      background: rgba(249,180,140,0.05);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+    }
+    .r-stat-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .r-stat-label {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      font-weight: 300;
+      margin-top: 0.25rem;
+    }
+
+    /* ── FORMS ───────────────────────────────────────────────────── */
+    .forms-section { padding-top: 5rem; padding-bottom: 7rem; }
+    .forms-header { text-align: center; margin-bottom: 3.5rem; }
+    .forms-header .section-sub { margin: 0 auto; }
+    .forms-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    .form-card {
+      background: var(--grad-card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 2.5rem;
+    }
+    .form-card-tag {
+      display: inline-block;
+      background: rgba(249,180,140,0.10);
+      border: 1px solid var(--border-hi);
+      color: var(--accent);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.75rem;
+      border-radius: 100px;
+      margin-bottom: 1.25rem;
+    }
+    .form-card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .form-card > p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      font-weight: 300;
+      margin-bottom: 1.75rem;
+      line-height: 1.65;
+    }
+    .field {
+      margin-bottom: 1rem;
+    }
+    .field label {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 0.375rem;
+    }
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      background: rgba(26,15,10,0.6);
+      border: 1px solid var(--border-hi);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      color: var(--text);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 300;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+    .field input::placeholder,
+    .field textarea::placeholder { color: var(--text-dim); }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus { border-color: var(--accent); }
+    .field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23F5C9A3' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+      cursor: pointer;
+    }
+    .field select option { background: #3C2214; }
+    .field textarea { resize: vertical; min-height: 80px; }
+    .form-submit {
+      width: 100%;
+      background: var(--grad-cta);
+      color: #1A0F0A;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      padding: 0.875rem 2rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .form-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+    .form-note {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-align: center;
+      margin-top: 0.875rem;
+    }
+
+    /* ── FOOTER ──────────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .footer-brand {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+    .footer-brand span { color: var(--accent); }
+    footer p {
+      font-size: 0.8125rem;
+      color: var(--text-dim);
+    }
+    footer a {
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    footer a:hover { color: var(--text-muted); }
+
+    /* ── DIVIDER ─────────────────────────────────────────────────── */
+    .divider {
+      width: 48px; height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 2rem;
+      opacity: 0.5;
+    }
+
+    /* ── RESPONSIVE ──────────────────────────────────────────────── */
+    @media (max-width: 800px) {
+      nav { padding: 0 1.25rem; }
+      .nav-links { display: none; }
+      .what-grid,
+      .audience-grid,
+      .forms-grid,
+      .research-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .kpi-cards { grid-template-columns: 1fr; }
+      .kpi-card:first-child { grid-column: auto; }
+      section { padding: 4rem 1.25rem; }
+      .research-inner { padding: 2rem; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">MYC <span>·</span> Campus-to-Studio</a>
+    <div class="nav-links">
+      <a href="#how-it-works">How it works</a>
+      <a href="#faculty">For faculty</a>
+      <a href="#students">For students</a>
+      <a href="#apply" class="nav-cta">Apply now</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">Now accepting applications — Spring 2026</div>
+    <h1>From the classroom<br />to the <em>studio floor</em></h1>
+    <p>Campus-to-Studio puts professional-grade costing and yield tools in the hands of the next generation of fashion designers — before they graduate.</p>
+    <div class="hero-actions">
+      <a href="#apply" class="btn-primary">Apply to the program</a>
+      <a href="#how-it-works" class="btn-secondary">How it works</a>
+    </div>
+    <div class="hero-schools">
+      <p>Partnering with</p>
+      <div class="school-tags">
+        <span class="school-tag">Fashion Institute of Technology</span>
+        <span class="school-tag">Pratt Institute</span>
+        <span class="school-tag">FIDM</span>
+        <span class="school-tag">Kent State University</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT IS IT -->
+  <section>
+    <div class="container">
+      <div class="what-grid">
+        <div class="what-text">
+          <p class="section-label">The program</p>
+          <h2 class="section-title">Built for the gap between school and the real world</h2>
+          <div class="divider"></div>
+          <p>Independent studios and micro-manufacturers lose money every day to <strong>costing errors, slow quoting, and wasted material</strong> — not because designers aren't talented, but because they were never given the right tools.</p>
+          <p>Campus-to-Studio bridges that gap. Through a collaboration with design schools, <strong>Makers Yield & Costs (MYC)</strong> puts professional costing, yield modeling, and BOM documentation into the hands of students who are already solving these problems with spreadsheets and guesswork.</p>
+          <p>This isn't a classroom software license. It's a <strong>real-world collaboration</strong> between MYC, faculty, and a small cohort of students who want to be the first in their field to do this right.</p>
+        </div>
+        <div class="kpi-cards">
+          <div class="kpi-card">
+            <div class="kpi-value">~8%</div>
+            <div class="kpi-label">Average costing error in manual small-studio workflows</div>
+            <div class="kpi-note">Source: Faculty survey, Lasell University capstone research (Vega, 2025)</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-value">138 min</div>
+            <div class="kpi-label">Average time-to-quote without dedicated tooling</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-value">65%</div>
+            <div class="kpi-label">Average material yield utilization in manual workflows</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-section" id="how-it-works">
+    <div class="container">
+      <p class="section-label">The process</p>
+      <h2 class="section-title">How Campus-to-Studio works</h2>
+      <p class="section-sub">Designed around how design schools actually operate — not how software companies wish they did.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">01</div>
+          <h3>Faculty get early access</h3>
+          <p>Participating faculty receive direct TestFlight (iOS) and Play beta (Android) access to MYC before any student involvement. No commitment, no agenda — just time to explore the tool on your own terms.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">02</div>
+          <h3>On-campus introduction</h3>
+          <p>The MYC founder visits campus for a focused session — not a product demo, but a working conversation about costing and yield in real studio practice. Short. No slides. Honest.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">03</div>
+          <h3>Four to five students join</h3>
+          <p>A small cohort of motivated students — selected together with faculty — receive full app access and become the program's founding cohort at their school.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">04</div>
+          <h3>Evangelists, not users</h3>
+          <p>These students aren't beta testers. They're the people who will carry professional tools into their studios, into their teams, and into the industry when they graduate.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOR WHOM -->
+  <section id="faculty">
+    <div class="container">
+      <p class="section-label">Who it's for</p>
+      <h2 class="section-title">Two paths into the program</h2>
+      <p class="section-sub">Faculty and students enter through different doors, but they're part of the same collaboration.</p>
+      <div class="audience-grid">
+
+        <div class="audience-card featured">
+          <span class="audience-tag">For faculty</span>
+          <h3>See the tool first. Decide second.</h3>
+          <p>This starts with you. No classroom adoption required — faculty access is about hands-on familiarity before any student involvement. If it's worth sharing, you'll know.</p>
+          <ul class="audience-list">
+            <li>Direct TestFlight or Play beta access — no app store approval needed</li>
+            <li>Full MYC Pro access for the duration of the program</li>
+            <li>Flexible involvement — one session on campus, nothing else required</li>
+            <li>Advance visibility into a tool your students will encounter professionally</li>
+          </ul>
+          <a href="#apply" class="btn-primary">Request faculty access</a>
+        </div>
+
+        <div class="audience-card" id="students">
+          <span class="audience-tag">For students</span>
+          <h3>Be the first at your school.</h3>
+          <p>We're looking for four to five students per campus who already think about the business side of design — costing, materials, production — and want to do it at a professional level.</p>
+          <ul class="audience-list">
+            <li>Full MYC access — the same tool working designers use</li>
+            <li>Direct connection with the MYC founder and product roadmap</li>
+            <li>First-mover credibility when you enter the industry</li>
+            <li>Part of an evidence-based research program with academic backing</li>
+          </ul>
+          <a href="#apply" class="btn-secondary">Apply as a student evangelist</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH CONTEXT -->
+  <section class="research-section">
+    <div class="container">
+      <p class="section-label">The research</p>
+      <h2 class="section-title">This isn't marketing. It's a study.</h2>
+      <div class="research-inner">
+        <div class="research-text">
+          <p>Campus-to-Studio is grounded in <strong>graduate-level research</strong> measuring whether focused, designer-centric tools like MYC can meaningfully reduce costing errors, shorten quoting time, and improve material yield in small studio workflows.</p>
+          <p>Baseline data from faculty at FIT and partner schools documents the current state: studios are losing precision and time to manual processes. The program's student cohort will provide the first real-world app-assisted comparison data.</p>
+          <p>Participants contribute to both a product and a body of evidence that can shape how design schools approach operational tooling for the next generation of studio owners.</p>
+          <cite>Vega, L. (2025). Measuring the impact of Makers Yield & Costs on costing accuracy and material efficiency in small fashion studios. Lasell University, FASH 798.</cite>
+        </div>
+        <div class="research-stats">
+          <div class="r-stat">
+            <div class="r-stat-value">3 KPIs</div>
+            <div class="r-stat-label">Costing accuracy · Time-to-quote · Material yield</div>
+          </div>
+          <div class="r-stat">
+            <div class="r-stat-value">4 schools</div>
+            <div class="r-stat-label">FIT · Pratt · FIDM · Kent State</div>
+          </div>
+          <div class="r-stat">
+            <div class="r-stat-value">~20 students</div>
+            <div class="r-stat-label">Target founding cohort across all campuses</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMS -->
+  <section class="forms-section" id="apply">
+    <div class="container">
+      <div class="forms-header">
+        <p class="section-label">Applications</p>
+        <h2 class="section-title">Join Campus-to-Studio</h2>
+        <p class="section-sub">Faculty and students apply separately. We review every submission and follow up directly.</p>
+      </div>
+      <div class="forms-grid">
+
+        <!-- FACULTY FORM -->
+        <div class="form-card">
+          <span class="form-card-tag">For faculty</span>
+          <h3>Request early access</h3>
+          <p>Get TestFlight or Play beta access to MYC before your students. Takes less than a minute.</p>
+          <!-- Replace YOUR_FORM_ID with your Formspree endpoint -->
+          <form action="https://formspree.io/f/YOUR_FACULTY_FORM_ID" method="POST">
+            <div class="field">
+              <label for="f-name">Full name</label>
+              <input type="text" id="f-name" name="name" placeholder="Dr. Jane Smith" required />
+            </div>
+            <div class="field">
+              <label for="f-school">Institution</label>
+              <select id="f-school" name="school" required>
+                <option value="" disabled selected>Select your school</option>
+                <option>Fashion Institute of Technology (FIT)</option>
+                <option>Pratt Institute</option>
+                <option>FIDM</option>
+                <option>Kent State University</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="f-dept">Department / Course area</label>
+              <input type="text" id="f-dept" name="department" placeholder="e.g. Fashion Design, Accessories" />
+            </div>
+            <div class="field">
+              <label for="f-email">Email</label>
+              <input type="email" id="f-email" name="email" placeholder="you@fit.edu" required />
+            </div>
+            <div class="field">
+              <label for="f-device">Primary device</label>
+              <select id="f-device" name="device" required>
+                <option value="" disabled selected>iOS or Android?</option>
+                <option>iOS (TestFlight)</option>
+                <option>Android (Play beta)</option>
+                <option>Both</option>
+              </select>
+            </div>
+            <button type="submit" class="form-submit">Request access →</button>
+            <p class="form-note">We follow up within 2 business days.</p>
+          </form>
+        </div>
+
+        <!-- STUDENT FORM -->
+        <div class="form-card">
+          <span class="form-card-tag">For students</span>
+          <h3>Apply as an evangelist</h3>
+          <p>We select 4–5 students per campus. Tell us who you are and why this matters to you.</p>
+          <!-- Replace YOUR_FORM_ID with your Formspree endpoint -->
+          <form action="https://formspree.io/f/YOUR_STUDENT_FORM_ID" method="POST">
+            <div class="field">
+              <label for="s-name">Full name</label>
+              <input type="text" id="s-name" name="name" placeholder="Your name" required />
+            </div>
+            <div class="field">
+              <label for="s-school">School</label>
+              <select id="s-school" name="school" required>
+                <option value="" disabled selected>Select your school</option>
+                <option>Fashion Institute of Technology (FIT)</option>
+                <option>Pratt Institute</option>
+                <option>FIDM</option>
+                <option>Kent State University</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="s-program">Program / Major</label>
+              <input type="text" id="s-program" name="program" placeholder="e.g. Footwear Design, Accessories" required />
+            </div>
+            <div class="field">
+              <label for="s-year">Year</label>
+              <select id="s-year" name="year" required>
+                <option value="" disabled selected>Select your year</option>
+                <option>Freshman</option>
+                <option>Sophomore</option>
+                <option>Junior</option>
+                <option>Senior</option>
+                <option>Graduate student</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="s-email">Email</label>
+              <input type="email" id="s-email" name="email" placeholder="you@pratt.edu" required />
+            </div>
+            <div class="field">
+              <label for="s-why">Why does this interest you? (2–3 sentences)</label>
+              <textarea id="s-why" name="why" placeholder="Tell us about your relationship with costing, materials, or production..." required></textarea>
+            </div>
+            <button type="submit" class="form-submit">Submit application →</button>
+            <p class="form-note">4–5 students selected per campus. We notify everyone.</p>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">MYC <span>·</span> Makers Yield &amp; Costs</div>
+    <p>
+      <a href="https://makersyield.com">makersyield.com</a>
+      &nbsp;·&nbsp;
+      <a href="mailto:frank@makersyield.com">frank@makersyield.com</a>
+    </p>
+    <p>&copy; 2026 Makers Yield &amp; Costs. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
